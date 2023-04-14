@@ -5,20 +5,48 @@ import os
 
 
 class DatasetCatalog(object):
-    DATA_DIR = "datasets"
+    # DATA_DIR = "datasets"
+    DATA_DIR = "/home/Datasets"
     DATASETS = {
         "coco_2017_train": {
-            "img_dir": "coco/train2017",
-            "ann_file": "coco/annotations/instances_train2017.json"
+            "img_dir": "COCO/022719/train2017",
+            "ann_file": "COCO/022719/annotations/instances_train2017.json"
         },
         "coco_2017_val": {
-            "img_dir": "coco/val2017",
-            "ann_file": "coco/annotations/instances_val2017.json"
+            "img_dir": "COCO/022719/val2017",
+            "ann_file": "COCO/022719/annotations/instances_val2017.json"
         },
         "coco_2017_test_dev": {
-            "img_dir": "coco/test2017",
-            "ann_file": "coco/annotations/image_info_test-dev2017.json"
+            "img_dir": "COCO/022719/test2017",
+            "ann_file": "COCO/022719/annotations/image_info_test-dev2017.json"
         },
+        
+        #------------iNaturalist 2017 Insecta-----------------#
+        "inaturalist_2017_insecta_train_cocostyle": {
+            "img_dir": "iNaturalist/2017",
+            "ann_file": "iNaturalist/2017/annotations/train_2017_Insecta_bboxes.json"
+        },
+        "inaturalist_2017_insecta_val_cocostyle": {
+            "img_dir": "iNaturalist/2017",
+            "ann_file": "iNaturalist/2017/annotations/val_2017_Insecta_bboxes.json"
+        },
+        # "inaturalist_2017_test_dev": {
+        #     "img_dir": "iNaturalist/2017/test2017",
+        #     "ann_file": "iNaturalist/2017/annotations/test2017.json"
+        # },
+
+        # "coco_2017_train": {
+        #     "img_dir": "coco/train2017",
+        #     "ann_file": "coco/annotations/instances_train2017.json"
+        # },
+        # "coco_2017_val": {
+        #     "img_dir": "coco/val2017",
+        #     "ann_file": "coco/annotations/instances_val2017.json"
+        # },
+        # "coco_2017_test_dev": {
+        #     "img_dir": "coco/test2017",
+        #     "ann_file": "coco/annotations/image_info_test-dev2017.json"
+        # },
         "coco_2014_train": {
             "img_dir": "coco/train2014",
             "ann_file": "coco/annotations/instances_train2014.json"
