@@ -40,6 +40,30 @@ class PascalVOCDataset(torch.utils.data.Dataset):
         "tvmonitor",
     )
 
+    IP102_CLASSES = (
+        "__background__ ",
+        'Rice leaf roller', 'Rice leaf caterpillar', 'Paddy stem maggot', 'Asiatic rice borer', 'Yellow rice borer', 
+        'Rice gall midge', 'Rice stemfly', 'Brown plant hopper', 'White backed plant hopper', 'Small brown plant hopper', 
+        'Rice water weevil', 'Rice leafhopper', 'Grain spreader thrips', 'Rice shell pest', 'Grub', 'Mole cricket', 'Wireworm', 
+        'White margined moth', 'Black cutworm', 'Large cutworm', 'Yellow cutworm', 'Red spider', 'Corn borer', 'Army worm', 
+        'Aphids', 'Potosiabre vitarsis', 'Peach borer', 'English grain aphid', 'Green bug', 'Bird cherry-oataphid', 
+        'Wheat blossom midge', 'Penthaleus major', 'Longlegged spider mite', 'Wheat phloeothrips', 'Wheat sawfly', 
+        'Cerodonta denticornis', 'Beet fly', 'Flea beetle', 'Cabbage army worm', 'Beet army worm', 'Beet spot flies', 
+        'Meadow moth', 'Beet weevil', 'Sericaorient alismots chulsky', 'Alfalfa weevil', 'Flax budworm', 'Alfalfa plant bug', 
+        'Tarnished plant bug', 'Locustoidea', 'Lytta polita', 'Legume blister beetle', 'Blister beetle', 'Therioaphis maculata buckton', 
+        'Odontothrips loti', 'Thrips', 'Alfalfa seed chalcid', 'Pieris canidia', 'Apolygus lucorum', 'Limacodidae', 'Viteus vitifoliae', 
+        'Colomerus vitis', 'Brevipoalpus lewisi mcgregor', 'Oides decempunctata', 'Polyphagotars onemus latus', 
+        'Pseudococcus comstocki kuwana', 'Parathrene regalis', 'Ampelophaga', 'Lycorma delicatula', 'Xylotrechus', 
+        'Cicadella viridis', 'Miridae', 'Trialeurodes vaporariorum', 'Erythroneura apicalis', 'Papilio xuthus', 
+        'Panonchus citri mcgregor', 'Phyllocoptes oleiverus ashmead', 'Icerya purchasi maskell', 'Unaspis yanonensis', 
+        'Ceroplastes rubens', 'Chrysomphalus aonidum', 'Parlatoria zizyphus lucus', 'Nipaecoccus vastalor', 'Aleurocanthus spiniferus', 
+        'Tetradacus c bactrocera minax', 'Dacus dorsalis(hendel)', 'Bactrocera tsuneonis', 'Prodenia litura', 'Adristyrannus', 
+        'Phyllocnistis citrella stainton', 'Toxoptera citricidus', 'Toxoptera aurantii', 'Aphis citricola vander goot', 
+        'Scirtothrips dorsalis hood', 'Dasineura sp', 'Lawana imitata melichar', 'Salurnis marginella guerr', 
+        'Deporaus marginatus pascoe', 'Chlumetia transversa', 'Mango flat beak leafhopper', 'Rhytidodera bowrinii white', 
+        'Sternochetus frigidus', 'Cicadellidae'
+      )
+
     def __init__(self, data_dir, split, use_difficult=False, transforms=None):
         self.root = data_dir
         self.image_set = split
@@ -55,7 +79,10 @@ class PascalVOCDataset(torch.utils.data.Dataset):
         self.ids = [x.strip("\n") for x in self.ids]
         self.id_to_img_map = {k: v for k, v in enumerate(self.ids)}
 
-        cls = PascalVOCDataset.CLASSES
+        if "IP102" in self.root:
+            cls = PascalVOCDataset.IP102_CLASSES
+        else:
+            cls = PascalVOCDataset.CLASSES
         self.class_to_ind = dict(zip(cls, range(len(cls))))
 
     def __getitem__(self, index):
@@ -95,6 +122,8 @@ class PascalVOCDataset(torch.utils.data.Dataset):
             if not self.keep_difficult and difficult:
                 continue
             name = obj.find("name").text.lower().strip()
+            if "IP102" in self.root:
+                name = obj.find("name").text.strip()
             bb = obj.find("bndbox")
             # Make pixel indexes 0-based
             # Refer to "https://github.com/rbgirshick/py-faster-rcnn/blob/master/lib/datasets/pascal_voc.py#L208-L211"
@@ -131,4 +160,8 @@ class PascalVOCDataset(torch.utils.data.Dataset):
         return {"height": im_info[0], "width": im_info[1]}
 
     def map_class_id_to_class_name(self, class_id):
-        return PascalVOCDataset.CLASSES[class_id]
+        # return PascalVOCDataset.CLASSES[class_id]
+        if "IP102" in self.root:
+            return PascalVOCDataset.IP102_CLASSES[class_id]
+        else:
+            return PascalVOCDataset.CLASSES[class_id]

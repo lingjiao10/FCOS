@@ -7,6 +7,7 @@ import os
 class DatasetCatalog(object):
     # DATA_DIR = "datasets"
     DATA_DIR = "/home/Datasets"
+    # DATA_DIR = "H:/Datasets"
     DATASETS = {
         "coco_2017_train": {
             "img_dir": "COCO/022719/train2017",
@@ -34,6 +35,18 @@ class DatasetCatalog(object):
         #     "img_dir": "iNaturalist/2017/test2017",
         #     "ann_file": "iNaturalist/2017/annotations/test2017.json"
         # },
+        #------------ip102-------------------------------------#
+        "ip102_trainval_voc":{ 
+            "img_dir": "IP102_v1.1/Detection/VOC2007",
+            "data_dir": "IP102_v1.1/Detection/VOC2007",
+            "split": "trainval"
+        },
+        "ip102_test_voc":{
+            "img_dir": "IP102_v1.1/Detection/VOC2007",
+            "data_dir": "IP102_v1.1/Detection/VOC2007",
+            "split": "test"
+        },
+        
 
         # "coco_2017_train": {
         #     "img_dir": "coco/train2017",
